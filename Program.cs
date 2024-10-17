@@ -37,6 +37,7 @@ await using (var serviceScope = host.Services.CreateAsyncScope())
     WriteResults(realEstateAgents);
     Console.WriteLine();
     WriteResults(realEstateAgentsWithGarden, true);
+    Console.ReadLine();
 
     static void WriteResults(IReadOnlyCollection<RealEstateAgentDetailsModel> realEstateAgents, bool withGarden = false)
     {
