@@ -58,7 +58,7 @@ internal static class ServiceCollectionExtensions
                 _ = builder
                     .AddRetry(new RetryStrategyOptions
                     {
-                        BackoffType = DelayBackoffType.Exponential,
+                        BackoffType = DelayBackoffType.Constant,
                         Delay = resilienceOptions.RetryOptions.Delay,
                         MaxRetryAttempts = resilienceOptions.RetryOptions.MaxRetryAttempts
                     })
