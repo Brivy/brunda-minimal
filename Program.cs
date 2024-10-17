@@ -30,15 +30,15 @@ await using (var serviceScope = host.Services.CreateAsyncScope())
     var serviceProvider = serviceScope.ServiceProvider;
     var realEstateAgentService = serviceProvider.GetRequiredService<IRealEstateAgentService>();
 
-    var realEstateAgents = await realEstateAgentService.GetAsync(SearchQueryConstants.AmsterdamSearchQuery, CancellationToken.None);
-    var realEstateAgentsWithGarden = await realEstateAgentService.GetAsync(SearchQueryConstants.AmsterdamWithGardenSearchQuery, CancellationToken.None);
+    var realEstateAgents = await realEstateAgentService.GetDetailsAsync(SearchQueryConstants.AmsterdamSearchQuery, CancellationToken.None);
+    var realEstateAgentsWithGarden = await realEstateAgentService.GetDetailsAsync(SearchQueryConstants.AmsterdamWithGardenSearchQuery, CancellationToken.None);
 
     Console.WriteLine();
     WriteResults(realEstateAgents);
     Console.WriteLine();
     WriteResults(realEstateAgentsWithGarden, true);
 
-    static void WriteResults(IReadOnlyCollection<RealEstateAgentSummaryModel> realEstateAgents, bool withGarden = false)
+    static void WriteResults(IReadOnlyCollection<RealEstateAgentDetailsModel> realEstateAgents, bool withGarden = false)
     {
         var position = 1;
         var topTenAgents = realEstateAgents.ToTopTen();

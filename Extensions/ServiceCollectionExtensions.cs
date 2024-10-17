@@ -18,7 +18,7 @@ internal static class ServiceCollectionExtensions
     {
         return services
             .AddScoped<IRealEstateAgentService, RealEstateAgentService>()
-            .AddScoped<IRealEstateAgentProvider, RealEstateAgentProvider>();
+            .AddScoped<IPartnerApiProvider, PartnerApiProvider>();
     }
 
     public static IServiceCollection AddPartnerApiClient(this IServiceCollection services, IConfiguration configuration)

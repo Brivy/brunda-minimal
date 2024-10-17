@@ -2,7 +2,7 @@
 
 namespace Brunda.Minimal.Responses;
 
-internal record ResidenceResponse
+internal record PropertyResponse
 {
     [JsonPropertyName("MakelaarId")]
     public required int RealEstateAgentId { get; init; }

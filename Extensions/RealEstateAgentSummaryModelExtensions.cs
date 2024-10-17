@@ -4,7 +4,7 @@ namespace Brunda.Minimal.Extensions;
 
 internal static class RealEstateAgentSummaryModelExtensions
 {
-    public static IReadOnlyCollection<RealEstateAgentSummaryModel> ToTopTen(this IReadOnlyCollection<RealEstateAgentSummaryModel> realEstateAgentSummaries) =>
+    public static IReadOnlyCollection<RealEstateAgentDetailsModel> ToTopTen(this IReadOnlyCollection<RealEstateAgentDetailsModel> realEstateAgentSummaries) =>
         realEstateAgentSummaries
             .OrderByDescending(x => x.ForSaleCount)
             .Take(10)

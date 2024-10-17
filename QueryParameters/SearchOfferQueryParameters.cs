@@ -2,7 +2,7 @@
 
 namespace Brunda.Minimal.QueryParameters;
 
-internal record OfferQueryParameters
+internal record SearchOfferQueryParameters
 {
     [AliasAs("type")]
     public string ResidenceContractType { get; init; } = "koop";

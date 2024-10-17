@@ -1,6 +1,6 @@
 ﻿namespace Brunda.Minimal.Models;
 
-public record RealEstateAgentSummaryModel
+public record RealEstateAgentDetailsModel
 {
     public required int RealEstateAgentId { get; init; }
     public required string RealEstateAgentName { get; init; }

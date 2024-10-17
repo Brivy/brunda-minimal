@@ -2,10 +2,10 @@
 
 namespace Brunda.Minimal.Responses;
 
-internal record OfferResponse
+internal record SearchOfferResponse
 {
     [JsonPropertyName("Objects")]
-    public required IReadOnlyCollection<ResidenceResponse> Residences { get; init; } = [];
+    public required IReadOnlyCollection<PropertyResponse> Properties { get; init; } = [];
     [JsonPropertyName("Paging")]
     public required PageResponse Paging { get; init; }
 }

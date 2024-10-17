@@ -7,5 +7,5 @@ namespace Brunda.Minimal.Clients;
 internal interface IPartnerApiClient
 {
     [Get("/{apiKey}")]
-    Task<ApiResponse<OfferResponse>> GetOffersAsync(string apiKey, OfferQueryParameters queryParameters, CancellationToken cancellationToken);
+    Task<ApiResponse<SearchOfferResponse>> SearchOfferAsync(string apiKey, SearchOfferQueryParameters queryParameters, CancellationToken cancellationToken);
 }

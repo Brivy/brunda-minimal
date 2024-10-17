@@ -8,42 +8,42 @@ using Microsoft.Extensions.Logging;
 namespace Brunda.Minimal.Services;
 
 internal class RealEstateAgentService(
-    IRealEstateAgentProvider realEstateAgentProvider,
+    IPartnerApiProvider realEstateAgentProvider,
     ILogger<RealEstateAgentService> logger) : IRealEstateAgentService
 {
-    private readonly IRealEstateAgentProvider _realEstateAgentProvider = realEstateAgentProvider;
+    private readonly IPartnerApiProvider _realEstateAgentProvider = realEstateAgentProvider;
     private readonly ILogger<RealEstateAgentService> _logger = logger;
 
-    public async Task<IReadOnlyCollection<RealEstateAgentSummaryModel>> GetAsync(string searchQuery, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<RealEstateAgentDetailsModel>> GetDetailsAsync(string searchQuery, CancellationToken cancellationToken)
     {
         var currentPage = 1;
         int pagesLeft;
 
-        var realEstateAgents = new List<ResidenceResponse>();
+        var properties = new List<PropertyResponse>();
         do
         {
-            var queryParameters = new OfferQueryParameters
+            var queryParameters = new SearchOfferQueryParameters
             {
                 SearchQuery = searchQuery,
                 Page = currentPage,
                 PageSize = PartnerApiConstants.MaxPageSize,
             };
 
-            var result = await _realEstateAgentProvider.GetSummaryDataAsync(queryParameters, cancellationToken).ConfigureAwait(false);
-            if (result == null)
+            var searchOffer = await _realEstateAgentProvider.SearchOfferAsync(queryParameters, cancellationToken).ConfigureAwait(false);
+            if (searchOffer == null)
             {
                 _logger.LogWarning("The partner API returned an invalid response for page {CurrentPage} that couldn't be resolved", currentPage);
                 break;
             }
 
-            realEstateAgents.AddRange(result.Residences);
-            pagesLeft = result.Paging.TotalPages - result.Paging.CurrentPage;
-            currentPage = result.Paging.CurrentPage + 1;
+            properties.AddRange(searchOffer.Properties);
+            pagesLeft = searchOffer.Paging.TotalPages - searchOffer.Paging.CurrentPage;
+            currentPage = searchOffer.Paging.CurrentPage + 1;
         } while (pagesLeft > 0);
 
-        return realEstateAgents
+        return properties
             .GroupBy(x => x.RealEstateAgentId)
-            .Select(x => new RealEstateAgentSummaryModel
+            .Select(x => new RealEstateAgentDetailsModel
             {
                 ForSaleCount = x.Count(),
                 RealEstateAgentId = x.Key,
